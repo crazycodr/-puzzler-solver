@@ -7,7 +7,12 @@ use App\Models\CrossSums\Puzzle;
 use App\Models\CrossSums\PuzzleSolver;
 use App\Models\CrossSums\Riddle;
 use App\Models\CrossSums\RiddleSnapshot;
+use App\Models\CrossSums\Validators\CellValuesMatchAcrossRiddleSnapshotsValidator;
+use App\Models\CrossSums\Validators\CompareRiddleCellsValidator;
+use App\Models\CrossSums\Validators\InvalidCellIndexException;
+use App\Models\CrossSums\Validators\PuzzleSnapshotHasValidRiddleSnapshotsValidator;
 use App\Models\CrossSums\Validators\PuzzleSnapshotValidator;
+use App\Models\CrossSums\Validators\UniqueValuesAcrossPuzzleSnapshotValidator;
 use Illuminate\Console\Command;
 
 class CrossSumsSolvePuzzleCommand extends Command
@@ -40,10 +45,10 @@ class CrossSumsSolvePuzzleCommand extends Command
      * Execute the console command.
      *
      * @return int
+     * @throws InvalidCellIndexException
      */
-    public function handle()
+    public function handle(): int
     {
-        ini_set('memory_limit', -1);
         try {
             $topRiddle = $this->processEquationToRiddle($this->argument('top-riddle'));
             $middleRiddle = $this->processEquationToRiddle($this->argument('middle-riddle'));
@@ -57,7 +62,11 @@ class CrossSumsSolvePuzzleCommand extends Command
         }
 
         $puzzle = new Puzzle($topRiddle, $middleRiddle, $bottomRiddle, $leftRiddle, $centerRiddle, $rightRiddle);
-        $puzzleSolver = new PuzzleSolver($puzzle, new PuzzleSnapshotValidator());
+        $puzzleSolver = new PuzzleSolver($puzzle, new PuzzleSnapshotValidator(
+            new CellValuesMatchAcrossRiddleSnapshotsValidator(),
+            new UniqueValuesAcrossPuzzleSnapshotValidator(),
+            new PuzzleSnapshotHasValidRiddleSnapshotsValidator()
+        ), new CompareRiddleCellsValidator());
         foreach ($puzzleSolver->getValidSolutions() as $solution)
         {
             $this->info('');
