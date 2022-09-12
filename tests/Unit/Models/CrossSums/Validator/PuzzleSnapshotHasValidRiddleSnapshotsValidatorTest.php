@@ -2,9 +2,9 @@
 
 namespace Tests\Unit\Models\CrossSums\Validator;
 
-use App\Models\CrossSums\PuzzleSnapshot;
-use App\Models\CrossSums\RiddleSnapshot;
-use App\Models\CrossSums\Validators\PuzzleSnapshotHasValidRiddleSnapshotsValidator;
+use App\CrossSums\PuzzleSnapshot;
+use App\CrossSums\RiddleSnapshot;
+use App\CrossSums\Validators\PuzzleSnapshotHasValidRiddleSnapshotsValidator;
 use PHPUnit\Framework\TestCase;
 
 class PuzzleSnapshotHasValidRiddleSnapshotsValidatorTest extends TestCase

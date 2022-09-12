@@ -2,11 +2,11 @@
 
 namespace Tests\Unit\Models\CrossSums\Validator;
 
-use App\Models\CrossSums\InvalidOperatorException;
-use App\Models\CrossSums\PuzzleSnapshot;
-use App\Models\CrossSums\Riddle;
-use App\Models\CrossSums\RiddleSnapshot;
-use App\Models\CrossSums\Validators\UniqueValuesAcrossPuzzleSnapshotValidator;
+use App\CrossSums\InvalidOperatorException;
+use App\CrossSums\PuzzleSnapshot;
+use App\CrossSums\Riddle;
+use App\CrossSums\RiddleSnapshot;
+use App\CrossSums\Validators\UniqueValuesAcrossPuzzleSnapshotValidator;
 use Tests\TestCase;
 
 class UniqueValuesAcrossPuzzleSnapshotValidatorTest extends TestCase

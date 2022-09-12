@@ -2,9 +2,9 @@
 
 namespace Tests\Unit\Models\CrossSums;
 
-use App\Models\CrossSums\InvalidOperatorException;
-use App\Models\CrossSums\Puzzle;
-use App\Models\CrossSums\Riddle;
+use App\CrossSums\InvalidOperatorException;
+use App\CrossSums\Puzzle;
+use App\CrossSums\Riddle;
 use PHPUnit\Framework\TestCase;
 
 class PuzzleTest extends TestCase

@@ -2,9 +2,9 @@
 
 namespace Tests\Unit\Models\CrossSums\Validator;
 
-use App\Models\CrossSums\PuzzleSnapshot;
-use App\Models\CrossSums\RiddleSnapshot;
-use App\Models\CrossSums\Validators\CellValuesMatchAcrossRiddleSnapshotsValidator;
+use App\CrossSums\PuzzleSnapshot;
+use App\CrossSums\RiddleSnapshot;
+use App\CrossSums\Validators\CellValuesMatchAcrossRiddleSnapshotsValidator;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\CrossSums\Validators;
+namespace App\CrossSums\Validators;
 
 use Exception;
 

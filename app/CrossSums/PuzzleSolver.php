@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Models\CrossSums;
+namespace App\CrossSums;
 
-use App\Models\CrossSums\Validators\CompareRiddleCellsValidator;
-use App\Models\CrossSums\Validators\PuzzleSnapshotValidator;
+use App\CrossSums\Validators\CompareRiddleCellsValidator;
+use App\CrossSums\Validators\PuzzleSnapshotValidator;
 
 class PuzzleSolver
 {
@@ -29,7 +29,7 @@ class PuzzleSolver
 
     /**
      * @return PuzzleSnapshot[]
-     * @throws Validators\InvalidCellIndexException
+     * @throws \App\CrossSums\Validators\InvalidCellIndexException
      */
     public function getValidSolutions(): array
     {

@@ -2,8 +2,8 @@
 
 namespace Tests\Unit\Models\CrossSums;
 
-use App\Models\CrossSums\Riddle;
-use App\Models\CrossSums\InvalidOperatorException;
+use App\CrossSums\InvalidOperatorException;
+use App\CrossSums\Riddle;
 use PHPUnit\Framework\TestCase;
 
 class RiddleTest extends TestCase

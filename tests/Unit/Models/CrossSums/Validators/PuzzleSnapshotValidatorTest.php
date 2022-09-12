@@ -2,11 +2,11 @@
 
 namespace Tests\Unit\Models\CrossSums\Validators;
 
-use App\Models\CrossSums\PuzzleSnapshot;
-use App\Models\CrossSums\Validators\CellValuesMatchAcrossRiddleSnapshotsValidator;
-use App\Models\CrossSums\Validators\PuzzleSnapshotHasValidRiddleSnapshotsValidator;
-use App\Models\CrossSums\Validators\PuzzleSnapshotValidator;
-use App\Models\CrossSums\Validators\UniqueValuesAcrossPuzzleSnapshotValidator;
+use App\CrossSums\PuzzleSnapshot;
+use App\CrossSums\Validators\CellValuesMatchAcrossRiddleSnapshotsValidator;
+use App\CrossSums\Validators\PuzzleSnapshotHasValidRiddleSnapshotsValidator;
+use App\CrossSums\Validators\PuzzleSnapshotValidator;
+use App\CrossSums\Validators\UniqueValuesAcrossPuzzleSnapshotValidator;
 use PHPUnit\Framework\TestCase;
 
 class PuzzleSnapshotValidatorTest extends TestCase

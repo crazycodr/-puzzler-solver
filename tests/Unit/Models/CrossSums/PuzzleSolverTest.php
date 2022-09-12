@@ -2,16 +2,16 @@
 
 namespace Tests\Unit\Models\CrossSums;
 
-use App\Models\CrossSums\InvalidOperatorException;
-use App\Models\CrossSums\Puzzle;
-use App\Models\CrossSums\PuzzleSolver;
-use App\Models\CrossSums\Riddle;
-use App\Models\CrossSums\Validators\CellValuesMatchAcrossRiddleSnapshotsValidator;
-use App\Models\CrossSums\Validators\CompareRiddleCellsValidator;
-use App\Models\CrossSums\Validators\InvalidCellIndexException;
-use App\Models\CrossSums\Validators\PuzzleSnapshotHasValidRiddleSnapshotsValidator;
-use App\Models\CrossSums\Validators\PuzzleSnapshotValidator;
-use App\Models\CrossSums\Validators\UniqueValuesAcrossPuzzleSnapshotValidator;
+use App\CrossSums\InvalidOperatorException;
+use App\CrossSums\Puzzle;
+use App\CrossSums\PuzzleSolver;
+use App\CrossSums\Riddle;
+use App\CrossSums\Validators\CellValuesMatchAcrossRiddleSnapshotsValidator;
+use App\CrossSums\Validators\CompareRiddleCellsValidator;
+use App\CrossSums\Validators\InvalidCellIndexException;
+use App\CrossSums\Validators\PuzzleSnapshotHasValidRiddleSnapshotsValidator;
+use App\CrossSums\Validators\PuzzleSnapshotValidator;
+use App\CrossSums\Validators\UniqueValuesAcrossPuzzleSnapshotValidator;
 use PHPUnit\Framework\TestCase;
 
 class PuzzleSolverTest extends TestCase

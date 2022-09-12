@@ -2,9 +2,9 @@
 
 namespace App\Console\Commands;
 
-use App\Models\CrossSums\Riddle;
-use App\Models\CrossSums\RiddleSolver;
-use App\Models\CrossSums\InvalidOperatorException;
+use App\CrossSums\InvalidOperatorException;
+use App\CrossSums\Riddle;
+use App\CrossSums\RiddleSolver;
 use Illuminate\Console\Command;
 
 class CrossSumsSolveRiddleCommand extends Command

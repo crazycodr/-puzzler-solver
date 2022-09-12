@@ -2,9 +2,9 @@
 
 namespace Tests\Unit\Models\CrossSums\Validators;
 
-use App\Models\CrossSums\RiddleSnapshot;
-use App\Models\CrossSums\Validators\CompareRiddleCellsValidator;
-use App\Models\CrossSums\Validators\InvalidCellIndexException;
+use App\CrossSums\RiddleSnapshot;
+use App\CrossSums\Validators\CompareRiddleCellsValidator;
+use App\CrossSums\Validators\InvalidCellIndexException;
 use PHPUnit\Framework\TestCase;
 
 class CompareRiddleCellsValidatorTest extends TestCase

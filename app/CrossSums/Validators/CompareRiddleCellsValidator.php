@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Models\CrossSums\Validators;
+namespace App\CrossSums\Validators;
 
-use App\Models\CrossSums\RiddleSnapshot;
+use App\CrossSums\RiddleSnapshot;
 
 class CompareRiddleCellsValidator
 {

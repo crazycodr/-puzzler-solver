@@ -2,8 +2,8 @@
 
 namespace Tests\Unit\Models\CrossSums;
 
-use App\Models\CrossSums\PuzzleSnapshot;
-use App\Models\CrossSums\RiddleSnapshot;
+use App\CrossSums\PuzzleSnapshot;
+use App\CrossSums\RiddleSnapshot;
 use PHPUnit\Framework\TestCase;
 
 class PuzzleSnapshotTest extends TestCase

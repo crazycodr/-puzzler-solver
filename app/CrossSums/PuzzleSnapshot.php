@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\CrossSums;
+namespace App\CrossSums;
 
 class PuzzleSnapshot
 {
