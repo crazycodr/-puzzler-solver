@@ -11,9 +11,11 @@ class Grid
     public function __construct(int $size)
     {
         $this->size = $size;
+        $initialMarks = range(1, $size);
         for ($row = 0; $row < $size; $row++) {
             for ($col = 0; $col < $size; $col++) {
                 $this->cells[$row][$col] = new Cell();
+                $this->cells[$row][$col]->setMarks($initialMarks);
             }
         }
     }

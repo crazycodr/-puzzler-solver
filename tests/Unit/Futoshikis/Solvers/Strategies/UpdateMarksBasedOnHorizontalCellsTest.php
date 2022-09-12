@@ -12,14 +12,17 @@ class UpdateMarksBasedOnHorizontalCellsTest extends TestCase
     public function testApplyDoesNotAddMarksToCells(){
         $grid = new Grid(4);
         $grid->getCell(new GridPosition(0,0))->setValue(1);
-        $this->assertEquals([], $grid->getCell(new GridPosition(0,1))->getMarks());
-        $this->assertEquals([], $grid->getCell(new GridPosition(0,2))->getMarks());
-        $this->assertEquals([], $grid->getCell(new GridPosition(0,3))->getMarks());
+        $grid->getCell(new GridPosition(0,1))->setMarks([2,3,4]);
+        $grid->getCell(new GridPosition(0,2))->setMarks([2,3,4]);
+        $grid->getCell(new GridPosition(0,3))->setMarks([2,3,4]);
+        $this->assertEquals([2,3,4], $grid->getCell(new GridPosition(0,1))->getMarks());
+        $this->assertEquals([2,3,4], $grid->getCell(new GridPosition(0,2))->getMarks());
+        $this->assertEquals([2,3,4], $grid->getCell(new GridPosition(0,3))->getMarks());
         $solver = new UpdateMarksBasedOnHorizontalCells();
         $solver->apply($grid);
-        $this->assertEquals([], $grid->getCell(new GridPosition(0,1))->getMarks());
-        $this->assertEquals([], $grid->getCell(new GridPosition(0,2))->getMarks());
-        $this->assertEquals([], $grid->getCell(new GridPosition(0,3))->getMarks());
+        $this->assertEquals([2,3,4], $grid->getCell(new GridPosition(0,1))->getMarks());
+        $this->assertEquals([2,3,4], $grid->getCell(new GridPosition(0,2))->getMarks());
+        $this->assertEquals([2,3,4], $grid->getCell(new GridPosition(0,3))->getMarks());
     }
 
     public function testApplyReducesMarksFromSolvedCells(){
