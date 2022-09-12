@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Models\CrossSums\Validators;
+namespace Tests\Unit\CrossSums\Validators;
 
 use App\CrossSums\PuzzleSnapshot;
 use App\CrossSums\Validators\CellValuesMatchAcrossRiddleSnapshotsValidator;

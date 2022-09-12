@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Models\CrossSums;
+namespace Tests\Unit\CrossSums;
 
 use App\CrossSums\PuzzleSnapshot;
 use App\CrossSums\RiddleSnapshot;

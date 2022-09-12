@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Models\CrossSums\Validator;
+namespace Tests\Unit\CrossSums\Validator;
 
 use App\CrossSums\InvalidOperatorException;
 use App\CrossSums\PuzzleSnapshot;
