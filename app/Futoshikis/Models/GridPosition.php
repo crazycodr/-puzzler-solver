@@ -12,4 +12,10 @@ class GridPosition
         $this->row = $row;
         $this->col = $col;
     }
+
+    public function isEqualTo(GridPosition $comparedTo): bool
+    {
+        return $this->row === $comparedTo->row
+            && $this->col === $comparedTo->col;
+    }
 }

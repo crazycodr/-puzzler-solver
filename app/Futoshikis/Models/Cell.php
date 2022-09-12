@@ -33,6 +33,7 @@ class Cell
     {
         $this->value = $value;
         $this->isEmpty = false;
+        $this->marks = [$value];
     }
 
     public function getMarks(): array
@@ -43,6 +44,11 @@ class Cell
     public function setMarks(array $marks): void
     {
         $this->marks = array_values($marks);
+    }
+
+    public function isSolved(): bool
+    {
+        return $this->isFilled();
     }
 
 }

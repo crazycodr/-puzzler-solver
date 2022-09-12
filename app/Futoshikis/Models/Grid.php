@@ -38,4 +38,18 @@ class Grid
     {
         return $this->cells[$position->row][$position->col];
     }
+
+    public function isSolved(): bool
+    {
+        for ($row=0; $row<$this->size; $row++){
+            for ($col=0; $col<$this->size; $col++){
+                $cellPosition = new GridPosition($row, $col);
+                $cell = $this->getCell($cellPosition);
+                if ($cell->isSolved() === false){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
 }

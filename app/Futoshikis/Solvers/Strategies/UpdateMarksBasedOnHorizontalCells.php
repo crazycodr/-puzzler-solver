@@ -8,12 +8,15 @@ use App\Futoshikis\Models\GridPosition;
 class UpdateMarksBasedOnHorizontalCells
 {
 
-    public function apply(Grid $grid): void
+    public function apply(Grid $grid): bool
     {
         for ($row = 0; $row < $grid->size; $row++) {
             $solvedValues = $this->getSolvedValues($grid, $row);
-            $this->removeSolvedMarks($grid, $row, $solvedValues);
+            if ($this->removeSolvedMarks($grid, $row, $solvedValues)) {
+                return true;
+            }
         }
+        return false;
     }
 
     /**
@@ -38,9 +41,9 @@ class UpdateMarksBasedOnHorizontalCells
      * @param Grid $grid
      * @param int $row
      * @param array $solvedValues
-     * @return void
+     * @return bool
      */
-    public function removeSolvedMarks(Grid $grid, int $row, array $solvedValues): void
+    public function removeSolvedMarks(Grid $grid, int $row, array $solvedValues): bool
     {
         for ($col = 0; $col < $grid->size; $col++) {
             $position = new GridPosition($row, $col);
@@ -48,9 +51,13 @@ class UpdateMarksBasedOnHorizontalCells
             if ($cell->isEmpty()) {
                 $currentMarks = $cell->getMarks();
                 $newMarks = array_diff($currentMarks, $solvedValues);
-                $cell->setMarks($newMarks);
+                if ($newMarks !== $currentMarks) {
+                    $cell->setMarks($newMarks);
+                    return true;
+                }
             }
         }
+        return false;
     }
 
 }
