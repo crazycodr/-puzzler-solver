@@ -33,8 +33,9 @@ class RemoveImpossibleMarksBasedOnRulesTest extends TestCase
             new GridPosition(0,0),
             new GridPosition(0, 1)
         ));
+        $grid->getCell(new GridPosition(0, 1))->setMarks([2]);
         $this->assertEquals([1,2], $grid->getCell(new GridPosition(0, 0))->getMarks());
-        $this->assertEquals([1,2], $grid->getCell(new GridPosition(0, 1))->getMarks());
+        $this->assertEquals([2], $grid->getCell(new GridPosition(0, 1))->getMarks());
         $strategy = new RemoveImpossibleMarksBasedOnRules();
         $strategy->apply($grid);
         $this->assertEquals([1], $grid->getCell(new GridPosition(0, 0))->getMarks());

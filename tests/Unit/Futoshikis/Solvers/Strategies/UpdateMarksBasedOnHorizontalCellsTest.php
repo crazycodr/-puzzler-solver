@@ -35,7 +35,9 @@ class UpdateMarksBasedOnHorizontalCellsTest extends TestCase
         $this->assertEquals([1,2,3], $grid->getCell(new GridPosition(0,2))->getMarks());
         $this->assertEquals([1,2,4], $grid->getCell(new GridPosition(0,3))->getMarks());
         $solver = new UpdateMarksBasedOnHorizontalCells();
-        $solver->apply($grid);
+        $solver->apply($grid); // Fixes cell 0,1
+        $solver->apply($grid); // Fixes cell 0,2
+        $solver->apply($grid); // Fixes cell 0,3
         $this->assertEquals([2,3,4], $grid->getCell(new GridPosition(0,1))->getMarks());
         $this->assertEquals([2,3], $grid->getCell(new GridPosition(0,2))->getMarks());
         $this->assertEquals([2,4], $grid->getCell(new GridPosition(0,3))->getMarks());

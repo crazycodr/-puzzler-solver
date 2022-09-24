@@ -37,7 +37,9 @@ class UpdateMarksBasedOnVerticalCellsTest extends TestCase
         $this->assertEquals([1, 2, 3], $grid->getCell(new GridPosition(2, 0))->getMarks());
         $this->assertEquals([1, 2, 4], $grid->getCell(new GridPosition(3, 0))->getMarks());
         $solver = new UpdateMarksBasedOnVerticalCells();
-        $solver->apply($grid);
+        $solver->apply($grid); // Fixes cell 1,0
+        $solver->apply($grid); // Fixes cell 2,0
+        $solver->apply($grid); // Fixes cell 3,0
         $this->assertEquals([2, 3, 4], $grid->getCell(new GridPosition(1, 0))->getMarks());
         $this->assertEquals([2, 3], $grid->getCell(new GridPosition(2, 0))->getMarks());
         $this->assertEquals([2, 4], $grid->getCell(new GridPosition(3, 0))->getMarks());

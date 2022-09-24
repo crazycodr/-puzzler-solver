@@ -2,7 +2,7 @@
 
 namespace App\Futoshikis\Solvers;
 
-use App\Futoshikis\Helpers\GridConsoleRenderer;
+use App\Futoshikis\Helpers\GridConsoleDisplayTableRenderer;
 use App\Futoshikis\Models\Grid;
 use App\Futoshikis\Solvers\Strategies\RemoveImpossibleMarksBasedOnRules;
 use App\Futoshikis\Solvers\Strategies\SolveCellWhenMarkAloneInCol;
@@ -42,7 +42,7 @@ class GridSolver
     {
         $triesLeft = 1000;
         while ($triesLeft > 0 && $grid->isSolved() === false) {
-            $renderer = new GridConsoleRenderer();
+            $renderer = new GridConsoleDisplayTableRenderer();
             echo $renderer->render($grid);
             echo "-------------------------------" . PHP_EOL;
             if ($this->updateMarksBasedOnHorizontalCells->apply($grid)) {
