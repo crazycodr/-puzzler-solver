@@ -8,6 +8,8 @@ use App\Futoshikis\Models\GridPosition;
 class UpdateMarksBasedOnVerticalCells
 {
 
+    private string $appliedMove;
+
     public function apply(Grid $grid): bool
     {
         for ($col = 0; $col < $grid->size; $col++) {
@@ -52,12 +54,21 @@ class UpdateMarksBasedOnVerticalCells
                 $currentMarks = $cell->getMarks();
                 $newMarks = array_diff($currentMarks, $solvedValues);
                 if ($newMarks !== $currentMarks) {
+                    $this->appliedMove = sprintf('Based on cells in column %d with solved values %s, set marks "%s" on cell (%d, %d)', $col + 1, implode(',', $solvedValues), implode(',', $newMarks), $row + 1, $col + 1);
                     $cell->setMarks($newMarks);
                     return true;
                 }
             }
         }
         return false;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAppliedMove(): string
+    {
+        return $this->appliedMove;
     }
 
 }

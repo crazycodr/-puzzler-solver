@@ -8,6 +8,8 @@ use App\Futoshikis\Models\GridPosition;
 class UpdateMarksBasedOnHorizontalCells
 {
 
+    private string $appliedMove = '';
+
     public function apply(Grid $grid): bool
     {
         for ($row = 0; $row < $grid->size; $row++) {
@@ -17,6 +19,11 @@ class UpdateMarksBasedOnHorizontalCells
             }
         }
         return false;
+    }
+
+    public function getAppliedMove(): string
+    {
+        return $this->appliedMove;
     }
 
     /**
@@ -52,6 +59,7 @@ class UpdateMarksBasedOnHorizontalCells
                 $currentMarks = $cell->getMarks();
                 $newMarks = array_diff($currentMarks, $solvedValues);
                 if ($newMarks !== $currentMarks) {
+                    $this->appliedMove = sprintf('Based on cells in row %d with solved values %s, set marks "%s" on cell (%d, %d)', $row + 1, implode(',', $solvedValues), implode(',', $newMarks), $row + 1, $col + 1);
                     $cell->setMarks($newMarks);
                     return true;
                 }

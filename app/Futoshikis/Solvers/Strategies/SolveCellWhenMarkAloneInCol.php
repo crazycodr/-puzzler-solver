@@ -7,6 +7,8 @@ use App\Futoshikis\Models\GridPosition;
 
 class SolveCellWhenMarkAloneInCol
 {
+    private string $appliedMove;
+
     public function apply(Grid $grid): bool
     {
         for ($col = 0; $col < $grid->size; $col++) {
@@ -34,10 +36,24 @@ class SolveCellWhenMarkAloneInCol
                 if ($cellToUpdate->isFilled()) {
                     continue;
                 }
+                $this->appliedMove = sprintf(
+                    'There is only one %s left in column %d, set that value in row %d',
+                    $value,
+                    $cellToUpdatePosition->col + 1,
+                    $cellToUpdatePosition->row + 1
+                );
                 $cellToUpdate->setValue($value);
                 return true;
             }
         }
         return false;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAppliedMove(): string
+    {
+        return $this->appliedMove;
     }
 }

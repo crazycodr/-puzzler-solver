@@ -7,28 +7,40 @@ use App\Futoshikis\Models\GridPosition;
 
 class RemoveImpossibleMarksBasedOnRules
 {
+    private string $appliedMove;
+
     public function apply(Grid $grid): bool
     {
         foreach ($grid->getRules() as $rule) {
             $greaterThanCell = $grid->getCell($rule->greaterThanPosition);
             $lesserThanCell = $grid->getCell($rule->lesserThanPosition);
-            $highestMarkInGreaterThanCell = max($greaterThanCell->getMarks());
             $lowestMarkInLesserThanCell = min($lesserThanCell->getMarks());
             $lowestMarkRemovedFromGreaterThanCellMarks = array_diff($greaterThanCell->getMarks(), range(1, $lowestMarkInLesserThanCell));
-            $highestMarkRemovedFromLesserThanCellMarks = array_diff($lesserThanCell->getMarks(), range($highestMarkInGreaterThanCell, $grid->size));
+            $markRemoved = array_diff($greaterThanCell->getMarks(), $lowestMarkRemovedFromGreaterThanCellMarks);
             if ($lowestMarkRemovedFromGreaterThanCellMarks !== $greaterThanCell->getMarks())
             {
                 $greaterThanCell->setMarks($lowestMarkRemovedFromGreaterThanCellMarks);
-                echo 'lowestMarkRemovedFromGreaterThanCellMarks: ' . $rule->greaterThanPosition->row . ',' . $rule->greaterThanPosition->col . PHP_EOL;
+                $this->appliedMove = sprintf('Based on rule between (%d, %d) < (%d, %d), you cannot have marks %s in the greater than cell (%d, %d)', $rule->lesserThanPosition->row + 1, $rule->lesserThanPosition->col + 1, $rule->greaterThanPosition->row + 1, $rule->greaterThanPosition->col + 1, implode(',', $markRemoved), $rule->greaterThanPosition->row + 1, $rule->greaterThanPosition->col + 1);
                 return true;
             }
+            $highestMarkInGreaterThanCell = max($greaterThanCell->getMarks());
+            $highestMarkRemovedFromLesserThanCellMarks = array_diff($lesserThanCell->getMarks(), range($highestMarkInGreaterThanCell, $grid->size));
+            $markRemoved = array_diff($lesserThanCell->getMarks(), $highestMarkRemovedFromLesserThanCellMarks);
             if ($highestMarkRemovedFromLesserThanCellMarks !== $lesserThanCell->getMarks())
             {
                 $lesserThanCell->setMarks($highestMarkRemovedFromLesserThanCellMarks);
-                echo 'highestMarkRemovedFromLesserThanCellMarks: ' . $rule->lesserThanPosition->row . ',' . $rule->lesserThanPosition->col . PHP_EOL;
+                $this->appliedMove = sprintf('Based on rule between (%d, %d) < (%d, %d), you cannot have marks %s in the less than cell (%d, %d)', $rule->lesserThanPosition->row + 1, $rule->lesserThanPosition->col + 1, $rule->greaterThanPosition->row + 1, $rule->greaterThanPosition->col + 1, implode(',', $markRemoved), $rule->lesserThanPosition->row + 1, $rule->lesserThanPosition->col + 1);
                 return true;
             }
         }
         return false;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAppliedMove(): string
+    {
+        return $this->appliedMove;
     }
 }

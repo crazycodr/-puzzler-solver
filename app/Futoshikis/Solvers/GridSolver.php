@@ -41,36 +41,38 @@ class GridSolver
     public function solve(Grid $grid): void
     {
         $triesLeft = 1000;
+        $renderer = new GridConsoleDisplayTableRenderer();
         while ($triesLeft > 0 && $grid->isSolved() === false) {
-            $renderer = new GridConsoleDisplayTableRenderer();
-            echo $renderer->render($grid);
-            echo "-------------------------------" . PHP_EOL;
             if ($this->updateMarksBasedOnHorizontalCells->apply($grid)) {
-                echo 'updateMarksBasedOnHorizontalCells' . PHP_EOL;
+                echo $this->updateMarksBasedOnHorizontalCells->getAppliedMove() . PHP_EOL;
                 continue;
             }
             if ($this->updateMarksBasedOnVerticalCells->apply($grid)) {
-                echo 'updateMarksBasedOnVerticalCells' . PHP_EOL;
+                echo $this->updateMarksBasedOnVerticalCells->getAppliedMove() . PHP_EOL;
                 continue;
             }
             if ($this->removeImpossibleMarksBasedOnRules->apply($grid)) {
-                echo 'removeImpossibleMarksBasedOnRules' . PHP_EOL;
+                echo $this->removeImpossibleMarksBasedOnRules->getAppliedMove() . PHP_EOL;
                 continue;
             }
             if ($this->solveCellWhenSingleMarkLeft->apply($grid)) {
-                echo 'solveCellWhenSingleMarkLeft' . PHP_EOL;
+                echo $this->solveCellWhenSingleMarkLeft->getAppliedMove() . PHP_EOL;
+                echo $renderer->render($grid);
                 continue;
             }
             if ($this->solveCellWhenMarkAloneInRow->apply($grid)) {
-                echo 'solveCellWhenMarkAloneInRow' . PHP_EOL;
+                echo $this->solveCellWhenMarkAloneInRow->getAppliedMove() . PHP_EOL;
+                echo $renderer->render($grid);
                 continue;
             }
             if ($this->solveCellWhenMarkAloneInCol->apply($grid)) {
-                echo 'solveCellWhenMarkAloneInCol' . PHP_EOL;
+                echo $this->solveCellWhenMarkAloneInCol->getAppliedMove() . PHP_EOL;
+                echo $renderer->render($grid);
                 continue;
             }
             $triesLeft--;
         }
+        echo $renderer->render($grid);
     }
 
 }

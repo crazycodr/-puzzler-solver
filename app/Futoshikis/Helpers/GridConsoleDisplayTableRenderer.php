@@ -5,6 +5,7 @@ namespace App\Futoshikis\Helpers;
 use App\Futoshikis\Models\Cell;
 use App\Futoshikis\Models\Grid;
 use App\Futoshikis\Models\GridPosition;
+use App\Futoshikis\Models\Rule;
 use Mmarica\DisplayTable;
 
 class GridConsoleDisplayTableRenderer
@@ -15,6 +16,7 @@ class GridConsoleDisplayTableRenderer
     public function render(Grid $grid): string
     {
         $cellRenderings = $this->getRenderingsByCell($grid);
+        $cellRenderings = $this->getRenderingsByRules($grid, $cellRenderings);
         return $this->renderCellsProgressively($cellRenderings);
     }
 
@@ -150,5 +152,65 @@ class GridConsoleDisplayTableRenderer
             $value = $this->getCellMarks($cell);
         }
         return $value;
+    }
+
+    private function getRenderingsByRules(Grid $grid, array $cellRenderings): array
+    {
+        foreach ($grid->getRules() as $rule) {
+            if ($this->lesserIsLeftOfGreater($rule)) {
+                $x = $rule->lesserThanPosition->row * 2;
+                $y = $rule->lesserThanPosition->col * 2 + 1;
+                $cellRenderings[$x][$y] = '<';
+            } elseif ($this->lesserIsRightOfGreater($rule)) {
+                $x = $rule->greaterThanPosition->row * 2;
+                $y = $rule->greaterThanPosition->col * 2 + 1;
+                $cellRenderings[$x][$y] = '<';
+            } elseif ($this->lesserIsAboveOfGreater($rule)) {
+                $x = $rule->greaterThanPosition->row * 2 - 1;
+                $y = $rule->greaterThanPosition->col * 2;
+                $cellRenderings[$x][$y] = str_pad("A", $this->largestCellTextValue, ' ', STR_PAD_BOTH);
+            } elseif ($this->lesserIsBelowOfGreater($rule)) {
+                $x = $rule->greaterThanPosition->row * 2 + 1;
+                $y = $rule->greaterThanPosition->col * 2;
+                $cellRenderings[$x][$y] = str_pad("V", $this->largestCellTextValue, ' ', STR_PAD_BOTH);
+            }
+        }
+        return $cellRenderings;
+    }
+
+    /**
+     * @param Rule $rule
+     * @return bool
+     */
+    public function lesserIsLeftOfGreater(Rule $rule): bool
+    {
+        return $rule->lesserThanPosition->row === $rule->greaterThanPosition->row && $rule->lesserThanPosition->col < $rule->greaterThanPosition->col;
+    }
+
+    /**
+     * @param Rule $rule
+     * @return bool
+     */
+    public function lesserIsRightOfGreater(Rule $rule): bool
+    {
+        return $rule->lesserThanPosition->row === $rule->greaterThanPosition->row && $rule->lesserThanPosition->col > $rule->greaterThanPosition->col;
+    }
+
+    /**
+     * @param Rule $rule
+     * @return bool
+     */
+    public function lesserIsAboveOfGreater(Rule $rule): bool
+    {
+        return $rule->lesserThanPosition->row < $rule->greaterThanPosition->row && $rule->lesserThanPosition->col === $rule->greaterThanPosition->col;
+    }
+
+    /**
+     * @param Rule $rule
+     * @return bool
+     */
+    public function lesserIsBelowOfGreater(Rule $rule): bool
+    {
+        return $rule->lesserThanPosition->row > $rule->greaterThanPosition->row && $rule->lesserThanPosition->col === $rule->greaterThanPosition->col;
     }
 }
