@@ -6,6 +6,7 @@ use App\Sudoku\Exceptions\ColumnNotFoundException;
 use App\Sudoku\Exceptions\NonEquivalentColumnsPerSectionException;
 use App\Sudoku\Exceptions\NonEquivalentRowsPerSectionException;
 use App\Sudoku\Exceptions\RowNotFoundException;
+use App\Sudoku\Exceptions\ValueDoesNotFitInSectionSizeException;
 
 class Grid
 {
@@ -27,12 +28,8 @@ class Grid
         $this->rows = $rows;
         $this->columnsPerSection = $columnsPerSection;
         $this->rowsPerSection = $rowsPerSection;
-        if (($this->getColumns() / $this->getColumnsPerSection()) !== floor($this->getColumns() / $this->getColumnsPerSection())) {
-            throw new NonEquivalentColumnsPerSectionException($this->getColumns(), $this->getColumnsPerSection());
-        }
-        if (($this->getRows() / $this->getRowsPerSection()) !== floor($this->getRows() / $this->getRowsPerSection())) {
-            throw new NonEquivalentRowsPerSectionException($this->getRows(), $this->getRowsPerSection());
-        }
+        $this->validateColumnsPerSectionIsValid();
+        $this->validateRowsPerSectionIsValid();
         $this->initializeValues();
         $this->initializeMarks();
     }
@@ -111,6 +108,28 @@ class Grid
     /**
      * @throws ColumnNotFoundException
      * @throws RowNotFoundException
+     * @throws ValueDoesNotFitInSectionSizeException
+     */
+    public function setValue(int $column, int $row, ?int $value): void
+    {
+        if (!array_key_exists($column, $this->values)) {
+            throw new ColumnNotFoundException($column, $this);
+        }
+        if (!array_key_exists($row, $this->values[$column])) {
+            throw new RowNotFoundException($row, $this);
+        }
+        if ($value !== null) {
+            $maximumValue = $this->getColumnsPerSection() * $this->getRowsPerSection();
+            if ($value < 1 || $value > $maximumValue) {
+                throw new ValueDoesNotFitInSectionSizeException($value, $maximumValue);
+            }
+        }
+        $this->values[$column][$row] = $value;
+    }
+
+    /**
+     * @throws ColumnNotFoundException
+     * @throws RowNotFoundException
      */
     public function getMarks(int $column, int $row): array
     {
@@ -121,5 +140,29 @@ class Grid
             throw new RowNotFoundException($row, $this);
         }
         return $this->marks[$column][$row];
+    }
+
+    /**
+     * @return void
+     * @throws NonEquivalentColumnsPerSectionException
+     */
+    public function validateColumnsPerSectionIsValid(): void
+    {
+        $columnSections = $this->getColumns() / $this->getColumnsPerSection();
+        if ($columnSections != floor($columnSections)) {
+            throw new NonEquivalentColumnsPerSectionException($this->getColumns(), $this->getColumnsPerSection());
+        }
+    }
+
+    /**
+     * @return void
+     * @throws NonEquivalentRowsPerSectionException
+     */
+    public function validateRowsPerSectionIsValid(): void
+    {
+        $rowSections = $this->getRows() / $this->getRowsPerSection();
+        if (($rowSections) != floor($rowSections)) {
+            throw new NonEquivalentRowsPerSectionException($this->getRows(), $this->getRowsPerSection());
+        }
     }
 }
