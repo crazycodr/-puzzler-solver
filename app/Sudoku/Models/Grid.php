@@ -143,6 +143,31 @@ class Grid
     }
 
     /**
+     * @throws ColumnNotFoundException
+     * @throws RowNotFoundException
+     * @throws ValueDoesNotFitInSectionSizeException
+     */
+    public function setMarks(int $column, int $row, array $marks): void
+    {
+        if (!array_key_exists($column, $this->values)) {
+            throw new ColumnNotFoundException($column, $this);
+        }
+        if (!array_key_exists($row, $this->values[$column])) {
+            throw new RowNotFoundException($row, $this);
+        }
+        $minimumMark = min($marks);
+        $maximumMark = max($marks);
+        $maximumValue = $this->getColumnsPerSection() * $this->getRowsPerSection();
+        if ($minimumMark < 1) {
+            throw new ValueDoesNotFitInSectionSizeException($minimumMark, $maximumValue);
+        }
+        if ($maximumMark > $maximumValue) {
+            throw new ValueDoesNotFitInSectionSizeException($maximumMark, $maximumValue);
+        }
+        $this->marks[$column][$row] = $marks;
+    }
+
+    /**
      * @return void
      * @throws NonEquivalentColumnsPerSectionException
      */

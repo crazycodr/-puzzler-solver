@@ -226,4 +226,74 @@ class GridTest extends TestCase
         $grid->setValue(1, 1, null);
         $this->assertNull($grid->getValue(1, 1));
     }
+
+    /**
+     * @throws NonEquivalentColumnsPerSectionException
+     * @throws NonEquivalentRowsPerSectionException
+     * @throws ColumnNotFoundException
+     * @throws RowNotFoundException
+     * @throws ValueDoesNotFitInSectionSizeException
+     */
+    public function testSetMarksWillThrowColumnNotFoundExceptionWhenApplicable(): void
+    {
+        $grid = new Grid(6, 6, 3, 2);
+        $this->expectException(ColumnNotFoundException::class);
+        $grid->setMarks(99, 1, [1, 2, 3]);
+    }
+
+    /**
+     * @throws NonEquivalentColumnsPerSectionException
+     * @throws NonEquivalentRowsPerSectionException
+     * @throws ColumnNotFoundException
+     * @throws RowNotFoundException
+     * @throws ValueDoesNotFitInSectionSizeException
+     */
+    public function testSetMarksWillThrowRowNotFoundExceptionWhenApplicable(): void
+    {
+        $grid = new Grid(6, 6, 3, 2);
+        $this->expectException(RowNotFoundException::class);
+        $grid->setMarks(1, 99, [1, 2, 3]);
+    }
+
+    /**
+     * @throws NonEquivalentColumnsPerSectionException
+     * @throws NonEquivalentRowsPerSectionException
+     * @throws ColumnNotFoundException
+     * @throws RowNotFoundException
+     * @throws ValueDoesNotFitInSectionSizeException
+     */
+    public function testSetMarksWillThrowValueDoesNotFitInSectionSizeExceptionWhenMarksIsTooLow(): void
+    {
+        $grid = new Grid(6, 6, 3, 2);
+        $this->expectException(ValueDoesNotFitInSectionSizeException::class);
+        $grid->setMarks(1, 1, [-1, 2, 3]);
+    }
+
+    /**
+     * @throws NonEquivalentColumnsPerSectionException
+     * @throws NonEquivalentRowsPerSectionException
+     * @throws ColumnNotFoundException
+     * @throws RowNotFoundException
+     * @throws ValueDoesNotFitInSectionSizeException
+     */
+    public function testSetMarksWillThrowValueDoesNotFitInSectionSizeExceptionWhenMarksIsTooLarge(): void
+    {
+        $grid = new Grid(6, 6, 3, 2);
+        $this->expectException(ValueDoesNotFitInSectionSizeException::class);
+        $grid->setMarks(1, 1, [1, 2, 99]);
+    }
+
+    /**
+     * @throws NonEquivalentColumnsPerSectionException
+     * @throws NonEquivalentRowsPerSectionException
+     * @throws ColumnNotFoundException
+     * @throws RowNotFoundException
+     * @throws ValueDoesNotFitInSectionSizeException
+     */
+    public function testSetMarksPersistsMarks(): void
+    {
+        $grid = new Grid(6, 6, 3, 2);
+        $grid->setMarks(1, 1, [1, 2, 3]);
+        $this->assertEquals([1, 2, 3], $grid->getMarks(1, 1));
+    }
 }
