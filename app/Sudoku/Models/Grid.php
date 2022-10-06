@@ -139,7 +139,7 @@ class Grid
         if (!array_key_exists($row, $this->values[$column])) {
             throw new RowNotFoundException($row, $this);
         }
-        return $this->marks[$column][$row];
+        return array_values($this->marks[$column][$row]);
     }
 
     /**
